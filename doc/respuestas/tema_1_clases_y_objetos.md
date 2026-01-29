@@ -84,23 +84,23 @@ Esto permite ofrecer distintas formas de realizar una misma operación, mejorand
 
 ## 8. Ejemplo mínimo de clase en Java, que se llame Punto, con dos atributos, x e y, con un método que se llame `calculaDistanciaAOrigen`, que calcule la distancia a la posición 0,0. Por sencillez, los atributos deben tener visibilidad por defecto. Crea además un ejemplo de uso con una instancia y uso del método
 
-class Punto {
+    class Punto {
     double x;
     double y;
 
-    double calculaDistanciaAOrigen() {
+        double calculaDistanciaAOrigen() {
         return Math.sqrt(x * x + y * y);
+        }
     }
-}
 
-class Prueba {
-    public static void main(String[] args) {
-        Punto p = new Punto();
-        p.x = 3;
-        p.y = 4;
-        System.out.println(p.calculaDistanciaAOrigen());
+    class Prueba {
+        public static void main(String[] args) {
+            Punto p = new Punto();
+            p.x = 3;
+            p.y = 4;
+            System.out.println(p.calculaDistanciaAOrigen());
+        }
     }
-}
 
 Una clase en Java define atributos y métodos de forma conjunta. En este ejemplo, la clase Punto modela un punto en el plano mediante dos coordenadas.
 
