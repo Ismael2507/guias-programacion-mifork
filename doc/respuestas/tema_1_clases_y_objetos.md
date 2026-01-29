@@ -131,17 +131,17 @@ La palabra clave new se utiliza para crear un nuevo objeto en memoria. Reserva e
 
 Un constructor es un método especial que se ejecuta al crear un objeto. Sirve para inicializar el estado inicial del objeto y tiene el mismo nombre que la clase.
 
-class Empleado {
-    String dni;
-    String nombre;
-    String apellidos;
+    class Empleado {
+        String dni;
+        String nombre;
+        String apellidos;
 
-    Empleado(String dni, String nombre, String apellidos) {
-        this.dni = dni;
-        this.nombre = nombre;
-        this.apellidos = apellidos;
+        Empleado(String dni, String nombre, String apellidos) {
+            this.dni = dni;
+            this.nombre = nombre;
+            this.apellidos = apellidos;
+        }
     }
-}
 
 
 ## 12. ¿Qué es la referencia `this`? ¿Se llama igual en todos los lenguajes? Pon un ejemplo del uso de `this` en la clase `Punto`
@@ -150,19 +150,19 @@ this es una referencia al objeto actual sobre el que se está ejecutando un mét
 
 No se llama igual en todos los lenguajes. En C++ también se utiliza this, mientras que en otros lenguajes puede variar o ser implícito.
 
-double calculaDistanciaAOrigen() {
-    return Math.sqrt(this.x * this.x + this.y * this.y);
-}
+    double calculaDistanciaAOrigen() {
+        return Math.sqrt(this.x * this.x + this.y * this.y);
+    }
 
 
 
 ## 13. Añade ahora otro nuevo método que se llame `distanciaA`, que reciba un `Punto` como parámetro y calcule la distancia entre `this` y el punto proporcionado
 
-double distanciaA(Punto otro) {
-    double dx = this.x - otro.x;
-    double dy = this.y - otro.y;
-    return Math.sqrt(dx * dx + dy * dy);
-}
+    double distanciaA(Punto otro) {
+        double dx = this.x - otro.x;
+        double dy = this.y - otro.y;
+        return Math.sqrt(dx * dx + dy * dy);
+    }
 Este método recibe otro objeto Punto como parámetro. Se calcula la distancia entre ambos utilizando sus atributos respectivos.
 
 El uso de this deja claro cuál es el punto que invoca el método y cuál es el punto recibido como argumento.
@@ -185,10 +185,10 @@ toString() es un método que devuelve una representación en texto del objeto. E
 
 Este método existe en otros lenguajes con conceptos similares, aunque el nombre puede variar. Su finalidad principal es facilitar la depuración y la salida por pantalla.
 
-@Override
-public String toString() {
-    return "Punto(" + x + ", " + y + ")";
-}
+    @Override
+    public String toString() {
+        return "Punto(" + x + ", " + y + ")";
+    }
 
 
 ## 16. Reflexiona: ¿una clase es como un `struct` en C? ¿Qué le falta al `struct` para ser como una clase y las variables de ese tipo ser instancias?
@@ -203,14 +203,14 @@ Para que un struct se pareciera a una clase, necesitaría encapsulación, métod
 
 ## 17. Quitemos un poco de magia a todo esto: ¿Como se podría “emular”, con `struct` en C, la clase `Punto`, con su función para calcular la distancia al origen? ¿Qué ha pasado con `this`?
 
-typedef struct {
-    double x;
-    double y;
-} Punto;
+    typedef struct {
+        double x;
+        double y;
+    } Punto;
 
-double distanciaOrigen(Punto *p) {
-    return sqrt(p->x * p->x + p->y * p->y);
-}
+    double distanciaOrigen(Punto *p) {
+        return sqrt(p->x * p->x + p->y * p->y);
+    }
 Aquí, el struct agrupa los datos, pero la función está separada. El parámetro Punto* actúa como una versión explícita de this.
 
 La principal diferencia es que el programador debe pasar manualmente la referencia al objeto. En Java, este proceso es implícito y más seguro.
