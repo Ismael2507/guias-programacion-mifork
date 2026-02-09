@@ -123,11 +123,17 @@ Para compilar un programa Java desde la línea de comandos se utiliza javac, que
 Java es un lenguaje compilado, pero no a código máquina nativo. El resultado de la compilación es byte-code, un código intermedio independiente de la plataforma.
 
 La máquina virtual de Java es la encargada de ejecutar ese byte-code. Esto permite que el mismo programa funcione en distintos sistemas sin recompilarlo.
+.javac-----------------------.class-------------------------IVM
 
 
 ## 11. En el código anterior de la clase `Punto` ¿Qué es `new`? ¿Qué es un **constructor**? Pon un ejemplo de constructor en una clase `Empleado` que tenga DNI, nombre y apellidos
 
 La palabra clave new se utiliza para crear un nuevo objeto en memoria. Reserva espacio para el objeto y devuelve una referencia a él.
+
+New:
+1. Reserva memoria
+2. Invoca contructor
+3. Es una expresion  (puedo asignarla a una variable, o usarla directamente en linea)
 
 Un constructor es un método especial que se ejecuta al crear un objeto. Sirve para inicializar el estado inicial del objeto y tiene el mismo nombre que la clase.
 
@@ -148,21 +154,25 @@ Un constructor es un método especial que se ejecuta al crear un objeto. Sirve p
 
 this es una referencia al objeto actual sobre el que se está ejecutando un método. Permite distinguir entre atributos del objeto y variables locales con el mismo nombre.
 
+this:
+1. Referencia al objecto actual
+2. Sirve para desambigüar
+3. No esta disponible en metodos static
+
 No se llama igual en todos los lenguajes. En C++ también se utiliza this, mientras que en otros lenguajes puede variar o ser implícito.
 
     double calculaDistanciaAOrigen() {
         return Math.sqrt(this.x * this.x + this.y * this.y);
     }
 
-
-
 ## 13. Añade ahora otro nuevo método que se llame `distanciaA`, que reciba un `Punto` como parámetro y calcule la distancia entre `this` y el punto proporcionado
-
+```java
     double distanciaA(Punto otro) {
         double dx = this.x - otro.x;
         double dy = this.y - otro.y;
         return Math.sqrt(dx * dx + dy * dy);
     }
+```
 Este método recibe otro objeto Punto como parámetro. Se calcula la distancia entre ambos utilizando sus atributos respectivos.
 
 El uso de this deja claro cuál es el punto que invoca el método y cuál es el punto recibido como argumento.
@@ -172,7 +182,7 @@ Este enfoque es más natural que pasar múltiples coordenadas sueltas, como se h
 
 ## 14. El paso del `Punto` como parámetro a un método, es **por copia** o **por referencia**, es decir, si se cambia el valor de algún atributo del punto pasado como parámetro, dichos cambios afectan al objeto fuera del método? ¿Qué ocurre si en vez de un `Punto`, se recibiese un entero (`int`) y dicho entero se modificase dentro de la función? 
 
-En Java, los parámetros se pasan por valor, pero en el caso de objetos el valor copiado es la referencia. Esto significa que ambos apuntan al mismo objeto en memoria.
+En Java, los parámetros se pasan por valor (hay dos zonas de memoria, x e y, y a la hora de pasar se copia, es decir, si despues se cambia dentro de la clase el cambio no afectará a la variable global), pero en el caso de objetos el valor copiado es la referencia(copia de la referencia). Esto significa que ambos apuntan al mismo objeto en memoria.
 
 Si se modifica el estado del objeto dentro del método, el cambio es visible fuera. Sin embargo, si se reasigna la referencia, eso no afecta al exterior.
 
@@ -202,7 +212,7 @@ Para que un struct se pareciera a una clase, necesitaría encapsulación, métod
 
 
 ## 17. Quitemos un poco de magia a todo esto: ¿Como se podría “emular”, con `struct` en C, la clase `Punto`, con su función para calcular la distancia al origen? ¿Qué ha pasado con `this`?
-
+```java
     typedef struct {
         double x;
         double y;
@@ -211,6 +221,7 @@ Para que un struct se pareciera a una clase, necesitaría encapsulación, métod
     double distanciaOrigen(Punto *p) {
         return sqrt(p->x * p->x + p->y * p->y);
     }
+```
 Aquí, el struct agrupa los datos, pero la función está separada. El parámetro Punto* actúa como una versión explícita de this.
 
 La principal diferencia es que el programador debe pasar manualmente la referencia al objeto. En Java, este proceso es implícito y más seguro.
