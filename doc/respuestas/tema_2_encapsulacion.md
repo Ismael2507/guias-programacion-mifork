@@ -16,22 +16,38 @@ Por favor, escribe en impersonal las respuestas.
 
 ## 1. En Programación Orientada a Objetos (POO), ¿Qué buscan la **encapsulación** y **la ocultación** de información? Enumera brevemente algunas ventajas de la ocultación de información.
 
-### Respuesta.
+La encapsulación en Programación Orientada a Objetos busca agrupar en una misma unidad (la clase) los datos y las operaciones que trabajan sobre esos datos. La ocultación de información es el mecanismo que permite controlar qué partes internas de esa clase son accesibles desde fuera y cuáles no. Ambos conceptos están estrechamente relacionados y tienen como objetivo principal reducir el acoplamiento entre las distintas partes de un programa.
+
+La ocultación de información pretende que el estado interno de un objeto no pueda ser modificado libremente desde el exterior. En lugar de acceder directamente a los atributos, el uso de métodos públicos obliga a interactuar con el objeto de una forma controlada. Esto permite que la clase mantenga su coherencia interna y haga cumplir ciertas reglas sobre sus datos.
+
+Entre las ventajas de la ocultación de información se encuentran una mayor robustez del código, una reducción de errores, una mejora en la mantenibilidad y una mayor facilidad para modificar la implementación interna sin afectar al resto del programa. Además, facilita el razonamiento sobre el comportamiento de los objetos y el diseño modular del software.
 
 
 ## 2. ¿Qué se entiende por la **interfaz pública** de un objeto o clase en POO? Describe brevemente cómo se relaciona con la ocultación de información.
 
-### Respuesta
+La interfaz pública de una clase es el conjunto de miembros (métodos y, en algunos casos, atributos) que están accesibles desde fuera de la clase. Define cómo otros objetos o clases pueden interactuar con ella, sin necesidad de conocer su funcionamiento interno. Es, en esencia, el “contrato” que la clase ofrece al exterior.
+
+La ocultación de información se relaciona directamente con la interfaz pública porque todo aquello que no forma parte de dicha interfaz queda escondido. Los detalles de implementación, como estructuras internas o cálculos auxiliares, permanecen inaccesibles para el código externo.
+
+Gracias a esta separación, una clase puede cambiar su implementación interna sin modificar su interfaz pública. Mientras el contrato se mantenga, el resto del programa no se ve afectado, lo que favorece la evolución y el mantenimiento del software.
 
 
 ## 3. Brevemente: ¿Por qué hay que ser conscientes y diseñar con cuidado la **interfaz pública** de una clase? ¿Es fácil cambiarla?
 
-### Respuesta
+La interfaz pública de una clase debe diseñarse con cuidado porque es la parte que será utilizada por otros componentes del programa. Una mala decisión en esta interfaz puede obligar a depender de detalles innecesarios o exponer funcionalidades que no deberían ser accesibles.
+
+Cambiar la interfaz pública de una clase no suele ser sencillo, ya que cualquier modificación puede romper el código que la utiliza. Esto es especialmente problemático en proyectos grandes o cuando la clase forma parte de una biblioteca compartida.
+
+Por este motivo, se recomienda que la interfaz pública sea mínima, clara y estable. Es preferible exponer sólo lo necesario y ocultar el resto, anticipando posibles cambios futuros en la implementación.
 
 
 ## 4. ¿Qué son las **invariantes de clase** y por qué la ocultación de información nos ayuda?
 
-### Respuesta
+Las invariantes de clase son condiciones que deben cumplirse siempre para que un objeto de esa clase sea válido. Estas reglas describen estados correctos del objeto y deben mantenerse tras la ejecución de cualquier método público.
+
+La ocultación de información ayuda a preservar las invariantes porque impide que el estado interno del objeto sea modificado directamente desde fuera. Al obligar a usar métodos controlados, la clase puede comprobar y garantizar que los cambios respetan dichas reglas.
+
+De esta forma, se evita que el objeto entre en un estado inconsistente. Esto aumenta la fiabilidad del programa y simplifica el razonamiento sobre el comportamiento de los objetos.
 
 
 ## 5. Pon un ejemplo de una clase `Punto` en `Java`, con dos coordenadas, `x` e `y`, de tipo `double`, con un método `calcularDistanciaAOrigen`, y que haga uso de la ocultación de información. ¿Cuál es la interfaz pública de la clase `Punto`? ¿Qué significa `public` y `private`?
