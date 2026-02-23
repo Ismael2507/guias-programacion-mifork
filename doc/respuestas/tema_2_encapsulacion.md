@@ -22,6 +22,8 @@ La ocultación de información pretende que el estado interno de un objeto no pu
 
 Entre las ventajas de la ocultación de información se encuentran una mayor robustez del código, una reducción de errores, una mejora en la mantenibilidad y una mayor facilidad para modificar la implementación interna sin afectar al resto del programa. Además, facilita el razonamiento sobre el comportamiento de los objetos y el diseño modular del software.
 
+Encapsulación tiene que ver con "Proteccion": Evito estado no validos de mis objetos, evito dependencias desde fuera que no quiero.
+
 
 ## 2. ¿Qué se entiende por la **interfaz pública** de un objeto o clase en POO? Describe brevemente cómo se relaciona con la ocultación de información.
 
@@ -44,6 +46,8 @@ Por este motivo, se recomienda que la interfaz pública sea mínima, clara y est
 ## 4. ¿Qué son las **invariantes de clase** y por qué la ocultación de información nos ayuda?
 
 Las invariantes de clase son condiciones que deben cumplirse siempre para que un objeto de esa clase sea válido. Estas reglas describen estados correctos del objeto y deben mantenerse tras la ejecución de cualquier método público.
+Ej: Cuenta bancaria debe tener siempre saldo positivo
+    Persona debe tener edad >= 0
 
 La ocultación de información ayuda a preservar las invariantes porque impide que el estado interno del objeto sea modificado directamente desde fuera. Al obligar a usar métodos controlados, la clase puede comprobar y garantizar que los cambios respetan dichas reglas.
 
@@ -85,6 +89,8 @@ Las clases de nivel superior no pueden ser private, pero sí los miembros que co
 ## 7. En POO, la visibilidad puede ser pública o privada, pero ¿existen más tipos de visibilidad? ¿Qué ocurre en Java? ¿Y en otros lenguajes?
 
 En Programación Orientada a Objetos existen distintos niveles de visibilidad que controlan el acceso a los miembros de una clase. Los más habituales son público, privado y protegido, aunque algunos lenguajes incluyen niveles adicionales.
+    Protected: Solo se ve desde subclases
+    Package-private: Solo se ve desde el paquete
 
 En Java existen cuatro niveles de visibilidad: public, protected, private y visibilidad por defecto (package-private). Esta última permite el acceso sólo desde clases del mismo paquete.
 
@@ -95,6 +101,7 @@ En otros lenguajes, como C++, también existe protected, pero no el concepto de 
 
 Los miembros de instancia privados de un objeto están ocultos para otras clases, pero no para otras instancias de la misma clase. Esto es un detalle importante del modelo de encapsulación en Java.
 
+java
     public double calcularDistanciaAPunto(Punto otro) {
     double dx = this.x - otro.x;
     double dy = this.y - otro.y;
@@ -115,6 +122,8 @@ Su uso evita el acceso directo a los atributos y permite introducir validaciones
 
 No siempre es obligatorio definir getters y setters para todos los atributos. Su inclusión debe responder a una necesidad real de la interfaz pública.
 
+"Los primitivos se pasan por copia (int, double), y los (String) devuelven copia de la referencia"
+  
 
 ## 10. Cuando nos referimos a que la ocultación de información mejora la "seguridad" del programa, ¿nos referimos a que no pueda ser "hackeado"?
 
@@ -134,6 +143,9 @@ En Java, los miembros de clase se declaran usando la palabra clave static. Estos
 Por tanto, la ocultación de información no se limita a los miembros de instancia, sino que también se aplica a los miembros de clase.
 
 
+Miembro de clase: No asociado a ninguna instacia; es compartido por todas las instancias (En métodos no hay this)
+Miembro de instancia: Está asociado a acada instancia; no son compartidos
+
 ## 12. Brevemente: ¿Tiene sentido que los constructores sean privados?
 
 Sí, tiene sentido que un constructor sea privado en determinados diseños. Un constructor privado impide la creación directa de objetos desde fuera de la clase.
@@ -142,11 +154,17 @@ Esto se utiliza, por ejemplo, en patrones de diseño como el patrón factoría o
 
 De esta forma, se refuerza la encapsulación y el control del ciclo de vida de los objetos.
 
+Tiene sentido?
+- Un constructor auxiliar oculto
+- Cuando prefiero usar métodos factoría
+- Cuando quiero controlar el numero de instancias
+
 
 ## 13. ¿Cómo se indican los **miembros de clase** en Java? Pon un ejemplo, en la clase `Punto` definida anteriormente, para que incluya miembros de clase que permitan saber cuáles son los valores `x` e `y` máximos que se han establecido en todos los puntos que se hayan creado hasta el momento.
 
 Los miembros de clase en Java se indican mediante la palabra clave static. Estos miembros pertenecen a la clase y no a una instancia concreta.
 
+java
     private static double maxX = Double.NEGATIVE_INFINITY;
     private static double maxY = Double.NEGATIVE_INFINITY;
 
@@ -158,9 +176,11 @@ La ocultación se mantiene declarando estos miembros como private.
 
 ## 14. Como sería un método factoría dentro de la clase `Punto` para construir un `Punto` a partir de dos coordenadas, pero que las redondee al entero más cercano. Escribe sólo el código del método, no toda la clase ¿Has usado `static`? 
 
+java
     public static Punto crearPuntoRedondeado(double x, double y) {
         return new Punto(Math.round(x), Math.round(y));
     }
+
 Sí, se ha usado static porque un método factoría pertenece a la clase y no a una instancia concreta. No necesita un objeto previo para ser invocado.
 
 Este método encapsula la lógica de creación y evita que el código externo tenga que conocer los detalles del redondeo.
@@ -182,6 +202,11 @@ Aunque un atributo tenga getter y setter públicos, no es recomendable declararl
 La convención habitual en POO es declarar los atributos como private. Esto permite añadir validaciones o cambiar el comportamiento sin romper la interfaz pública.
 
 Esta práctica está directamente relacionada con el mantenimiento de las invariantes de clase.
+
+"Si los hago publicos...
+    Para poder garantizar la invariante de clase
+    Convencion es: 
+        Atributos siempre privados y emplear metodos de acceso"
 
 
 ## 17. ¿Qué significa que una clase sea **inmutable**? ¿qué es un método modificador? ¿Un método modificador es siempre un "setter"? ¿Tiene ventajas que una clase sea inmutable?
@@ -287,5 +312,7 @@ public enum Mes {
     }
 }
 Este enumerado encapsula datos y comportamiento, usando atributos privados y constructores controlados. Representa un uso completo de encapsulación en Java.
+
+## 24. Añade a la clase `Mes` del ejercicio anterior cuatro métodos para devolver si ese mes tiene algunos días de invierno, primavera, verano u otoño, indicando con un booleano el hemisferio (norte o sur, parámetro `enHemisferioNorte`). Es decir: `esDePrimavera(boolean esHemisferioNorte)`, `esDeVerano(boolean esHemisferioNorte)`, `esDeOtoño(boolean esHemisferioNorte)`, `esDeInvierno(boolean esHemisferioNorte)`
 
 
