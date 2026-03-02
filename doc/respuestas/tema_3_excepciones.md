@@ -85,35 +85,77 @@ Cuando llamamos me facilita separar la logica normal de la de reaccion o manejo 
     class App{
         main(){
             double num=leerTeclado();
+            
+            try{
             double resultado=Calculadora.raiz(num);
             sout(resultado);
+            }catch(IllegalArgumentException e){
+                sout("El numero es negativo, no te preocupes, nadie es perfecto")
+            }
         }
     }
             
 ## 3. Reescribe el mismo ejemplo de raiz, pero en Java, metiendo ese método en una clase `Calculadora` y llama a dicho método desde el método `main`, mostrando cómo se puede controlar desde fuera.
 
-### Respuesta
+En Java, las excepciones forman parte del lenguaje. Se puede definir una clase Calculadora con un método que lance una excepción si el número es negativo.
 
+public class Calculadora {
+
+    public static double raiz(double x) {
+        if (x < 0) {
+            throw new IllegalArgumentException("Número negativo");
+        }
+        return Math.sqrt(x);
+    }
+
+    public static void main(String[] args) {
+        try {
+            double r = raiz(-4);
+            System.out.println("Resultado: " + r);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+}
+
+Aquí el método raiz no devuelve un valor especial. Si el argumento es negativo, se lanza una excepción. El método main controla la excepción mediante un bloque try-catch, lo que permite informar al usuario desde fuera del método.
 
 ## 4. ¿Qué es **"lanzar"** una excepción? ¿Qué es **"controlar"** o **"capturar"** una excepción? ¿Qué es que se **"propague"** una excepción? ¿Qué le va ocurriendo a las funciones en la pila de llamadas por donde se va propagando la excepción? ¿Las funciones que no la controlan se reanudan después de alguna forma? Explica con el mismo ejemplo anterior en Java de la raíz cuadrada.
 
-### Respuesta
+Lanzar una excepción significa crear un objeto excepción y señalar que se ha producido un error mediante la palabra clave throw. Capturar o controlar una excepción significa interceptarla mediante un bloque catch para tratarla de forma específica.
 
+Si una función lanza una excepción y no la captura, esta se propaga hacia la función que la llamó. El proceso continúa subiendo por la pila de llamadas hasta encontrar un manejador adecuado. Mientras se propaga, las funciones intermedias se van terminando abruptamente.
+
+En el ejemplo anterior, si raiz lanza la excepción y main la captura, el flujo salta directamente al catch. Las funciones que no la capturan no se reanudan después; su ejecución termina en el punto donde ocurrió la excepción.
 
 ## 5. ¿Qué ventajas tiene frente a C, la **"propagación natural"** de las excepciones a través de la pila (*stack*) de llamadas?
 
-### Respuesta
+La propagación automática a través de la pila evita tener que comprobar manualmente códigos de error tras cada llamada, como ocurre en C. El flujo normal del programa queda más limpio y centrado en la lógica principal.
 
+Además, permite que el nivel más adecuado decida cómo tratar el error. Una función intermedia puede no saber cómo reaccionar, pero una capa superior sí. Esto mejora la separación de responsabilidades y reduce el acoplamiento entre módulos.
 
 ## 6. En orientación a objetos, ¿las excepciones suelen ser objetos? ¿Qué ventajas tiene esto en términos de encapsulación? ¿Podemos entonces crear excepciones personalizadas?
 
-### Respuesta
+En orientación a objetos, las excepciones son objetos. En Java, todas heredan de la clase Exception o RuntimeException. Esto permite encapsular información relevante dentro del objeto.
+
+Gracias a la encapsulación, una excepción puede contener un mensaje, un código de error o incluso otros datos adicionales. También es posible crear excepciones personalizadas heredando de Exception.
+
+    public class NumeroNegativoException extends Exception {
+        public NumeroNegativoException(String mensaje) {
+            super(mensaje);
+        }
+    }
 
 
 ## 7. En relación con las ventajas de la encapsulación, comparando el ejemplo en C con Java. ¿Qué **información esencial** lleva cualquier **objeto excepción** que es muy útil tener cuando se llega a un manejador?
 
-### Respuesta
+Un objeto excepción suele contener al menos un mensaje descriptivo del error y la traza de la pila (stack trace). Esta traza indica en qué método y en qué línea se produjo el problema.
 
+A diferencia del ejemplo en C, donde solo se devuelve un valor o código, aquí se dispone de información estructurada sobre el contexto del error. Esto resulta muy útil cuando el manejador necesita diagnosticar el problema o registrarlo.
+
+Un mensaje: getMessage()
+La traza de la pila: getStackTrace(), printStackTrace()
+Opcionalmente, la "Causa", otra excepcion que es la verdadera causa
 
 ## 8. En Java, sobre el bloque **"try-catch"**, ¿se pueden tener más de un bloque `catch`? ¿cuántos bloques `catch` se ejecutan?
 
