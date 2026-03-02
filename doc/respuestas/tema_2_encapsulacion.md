@@ -217,6 +217,9 @@ Un método modificador es aquel que cambia el estado interno del objeto. Un sett
 
 Las clases inmutables ofrecen ventajas como mayor seguridad, facilidad de razonamiento y ausencia de efectos colaterales.
 
+Inmutable: su estado no cambia
+Modificadador: Cualquier metodo que cambia el estado interno (Un setter)
+Las clases inmutables tienen ventajas: No hacer clases mutables por defecto
 
 ## 18. ¿Es recomendable incluir métodos "setter" siempre y como convención?
 
