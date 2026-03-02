@@ -247,6 +247,13 @@ En Java, el método equals se utiliza para comparar el contenido lógico de los 
 
 Las cadenas en Java deben compararse siempre usando equals, no ==.
 
+Comparar objetos: Por identidad (mismo objeto en memoria) o por contenido (mismo estado, valor de sus atributos)
+
+Identidad: if(a==b)
+Contenido: if(a.equals(b))
+El metodo equals por defecto hace comparacion por identidad exceptoo en clases concretas donde se implementa una comparacion por contenido
+
+
 
 ## 21. ¿Qué son las clases "wrapper" en un lenguaje de programación orientado a objetos? ¿Cómo se hace? ¿Es un proceso automático? ¿Qué ventajas tienen? ¿Todos los lenguajes orientados a objetos tienen tipos primitivos y necesitan wrappers? 
 
@@ -255,6 +262,12 @@ Las clases wrapper son clases que encapsulan tipos primitivos en objetos. En Jav
 El proceso de conversión puede ser automático mediante autoboxing y unboxing. Esto facilita el uso de primitivas en colecciones y contextos orientados a objetos.
 
 No todos los lenguajes orientados a objetos tienen tipos primitivos, por lo que no todos necesitan wrappers.
+
+Wrappers: Ocurren en lenguajes que tienen tipos primitivos.
+Ventajas:
+- Añade comportamiento
+- Poder usarlos en contextos donde se necesitan objetos (List <T>)
+Autoboxing/unboxing
 
 
 ## 22. ¿En POO qué es un **tipo de dato enumerado**? ¿En Java, un tipo de dato enumerado es una clase? ¿Qué ventajas tienen en términos de encapsulación los enumerados en Java?
@@ -265,6 +278,35 @@ En Java, un enumerado es una clase especial. Puede tener atributos, métodos y c
 
 Esto mejora la encapsulación al asociar comportamiento directamente a los valores posibles.
 
+Enumerado es un tipo con un numero determinado de valores posibles
+En java uun enumerado es una clase, cuyas instancias son finitas, conocidas de antemano y tienen nombre cada una (valor del enumerado)
+
+    public enum TipoIVA{
+        GENERAL,REDUCIDO;
+
+        public double aplicar (double cant){
+
+            return switch(this){
+                case GENERAL -> retun cant*1.21
+                case REDUCIDO -> retun cant*1.10
+            }
+        }
+    }
+
+    public enum TipoIVA{
+        GENERAL (1.21),REDUCIDO (1.1);
+
+        private double factor;
+        public double aplicar (double cant){
+
+            return switch(this){
+                return cant*this.factor;
+            }
+            private TipoIVA (double factor){
+                this.factor=factor;
+            }
+        }
+    }
 
 ## 23. Crea un tipo enumerado en Java que se llame `Mes`, con doce posibles instancias y que además proporcione métodos para obtener cuántos días tiene ese mes, el ordinal de ese mes en el año (1-12), empleando atributos privados y constructores del tipo enumerado. Añade además cuatro métodos para devolver si ese mes tiene algunos días de invierno, primavera, verano u otoño, indicando con un booleano el hemisferio (norte o sur, parámetro `enHemisferioNorte`). Es decir: `esDePrimavera(boolean esHemisferioNorte)`, `esDeVerano(boolean esHemisferioNorte)`, `esDeOtoño(boolean esHemisferioNorte)`, `esDeInvierno(boolean esHemisferioNorte)`
 
