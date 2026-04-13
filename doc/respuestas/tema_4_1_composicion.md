@@ -460,6 +460,7 @@ public class Main {
     }
 }
 ````
+
 ## 11. ¿Qué son las relaciones de composición "bidireccionales"? ¿Qué habría que hacer para implementar este tipo de relación en el ejemplo de `Profesor` y `Departamento`?
 
 Una relación bidireccional es aquella en la que ambas clases mantienen referencia mutua y puede navegarse en ambos sentidos. En lugar de tener solo “el departamento conoce a sus profesores”, también se tendría “cada profesor conoce a su departamento”. Eso facilita ciertos accesos, pero complica el mantenimiento de la consistencia, porque cada cambio debe reflejarse en los dos lados.
