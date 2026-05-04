@@ -330,6 +330,17 @@ Contravariante: Invierte la relación de herencia. Si A hereda de B, entonces Co
 
 Invariante: No existe ninguna relación jerárquica entre los contenedores, independientemente de la relación entre los tipos internos.
 
+/*
+Compilador los genericos son invariantes
+List<?> miLista -- No me importa lo que tenga, es como una lista de Object
+List<? super Number> miLista -- 
+List<? extends Number> miLista -- Seria compatible con un Integer o Double. No podemos hacer todas las operaciones de List
+
+public media (List<Number> numeros)-- Solo puedo pasar List de Number
+public media (List<? extendes Number> numeros)-- Integer double
+
+*/
+
 
 ## 13. Java permite recuperar covarianza y contravarianza en tipos genéricos de forma controlada mediante **wildcards**. ¿Qué es un wildcard (`?`)? Muestra la diferencia entre `List<? extends T>` y `List<? super T>`, indicando en qué casos se usa cada uno. Pon dos ejemplos: (i) un método que reciba una lista de números y calcule su suma, usando `? extends`; (ii) un método que reciba una lista y le añada varios números enteros, usando `? super`.
 
